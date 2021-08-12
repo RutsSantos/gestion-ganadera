@@ -15,48 +15,48 @@ export default function HeaderStats() {
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="TRAFFIC"
+                  statSubtitle="ANIMALES"
                   statTitle="350,897"
                   statArrow="up"
                   statPercent="3.48"
                   statPercentColor="text-emerald-500"
-                  statDescripiron="Since last month"
+                  statDescripiron="Desde el mes pasado"
                   statIconName="far fa-chart-bar"
                   statIconColor="bg-red-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="NEW USERS"
+                  statSubtitle="GESTANTES"
                   statTitle="2,356"
                   statArrow="down"
                   statPercent="3.48"
                   statPercentColor="text-red-500"
-                  statDescripiron="Since last week"
+                  statDescripiron="Desde el mes pasado"
                   statIconName="fas fa-chart-pie"
                   statIconColor="bg-orange-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="SALES"
+                  statSubtitle="VENTAS"
                   statTitle="924"
                   statArrow="down"
                   statPercent="1.10"
                   statPercentColor="text-orange-500"
-                  statDescripiron="Since yesterday"
+                  statDescripiron="Desde el mes pasado"
                   statIconName="fas fa-users"
                   statIconColor="bg-pink-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="PERFORMANCE"
+                  statSubtitle="PRODUCCIÓN MES"
                   statTitle="49,65%"
                   statArrow="up"
                   statPercent="12"
                   statPercentColor="text-emerald-500"
-                  statDescripiron="Since last month"
+                  statDescripiron="Desde el mes pasado"
                   statIconName="fas fa-percent"
                   statIconColor="bg-lightBlue-500"
                 />
