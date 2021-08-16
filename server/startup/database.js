@@ -22,8 +22,10 @@ const connection = new Connection(config);
 connection.on('connect', function (err) {
   if (err) {
     console.error(err);
-    throw err;
+    process.exit(1);
   }
+
+  console.log('db initialized...');
 });
 
 // Attempt to connect and execute queries if connection goes through

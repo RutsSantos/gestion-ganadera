@@ -6,10 +6,11 @@ const routes = require('./startup/routes');
 
 const app = express();
 
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 routes(app);
 
 
 app.listen(3200, () => {
-    console.log(`App is listening at http://localhost:${port}`);
+    console.log('App is listening at http://localhost:3200');
 });
