@@ -57,24 +57,3 @@ app.get('/animales', (req, res) => {
       });
     connection.execSql(request);
 })
-
-// function queryDatabase(query) {
-//     // Read all rows from table
-//     const request = new Request(
-//         query,
-//         (err, rowCount, rows) => {
-//             if (err) {
-//                 console.error(err.message);
-//             } else {
-//                 console.log(`${rowCount} row(s) returned`);
-//                 console.log(rows)
-//                 data = rows;
-//             }
-//         }
-//     );
-
-//     connection.execSql(request);
-//     return data;
-// }
-
-// exports.queryDatabase = queryDatabase;
