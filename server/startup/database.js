@@ -20,8 +20,10 @@ const config = {
 const connection = new Connection(config);
 
 connection.on('connect', function (err) {
-  console.error(err);
-  throw err;
+  if (err) {
+    console.error(err);
+    throw err;
+  }
 });
 
 // Attempt to connect and execute queries if connection goes through
