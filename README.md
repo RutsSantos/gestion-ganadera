@@ -8,9 +8,10 @@ Hoy en día la gestión de fincas ganaderas mantiene actividades muy primitivas 
 
 ## Características
 
-- 
-- 
-- 
+- Software de gestión de fincas ganaderas basado en la nube y accesible desde cualquier dispositivo.
+- Manejo organizado de ganado, reproducción y producción.
+- Control de personal y gestión de pagos.
+- Eficiencia en el manejo de chequeos médicos, niveles de producción y tiempos estimados de procesos importantes de animales.
 
 
 ## Instalación e Inicio
