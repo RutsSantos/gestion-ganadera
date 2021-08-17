@@ -1,14 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 
 export default function Login() {
-  const [data, setData] = useState([]);
-  useEffect(()=>{
-    axios.get('http://localhost:3200/animales').then((res)=>setData(res.data))
-  }, [])
-  console.log(data);
   return (
     <>
       <div className="container mx-auto px-4 h-full">
