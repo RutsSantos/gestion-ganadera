@@ -10,6 +10,7 @@ export default function Inventory() {
   const [data2, setData2] = useState([]);
   const [estado_animal, setEstado] = useState([]);
   const [show, setShow] = useState(false);
+  const [del, setDelete] = useState(false);
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -20,7 +21,7 @@ export default function Inventory() {
       setEstado(response2.data)
     }
     fetchMyAPI()
-  }, [show])
+  }, [show, del])
 
   data.map(item => {
     estado_animal.map(estado => item["id_estado_animal"] === estado["id_estado_animal"] && (item["id_estado_animal"] = estado["descripcion"]));
@@ -31,18 +32,16 @@ export default function Inventory() {
   headers[4] = "Estado animal";
 
   const handleModalChange = (res) => setShow(res);
-  
+  const handleDelete = (res) => setDelete(res);
+
   const postApi = async (id, body) => {
     if(data2){
       await axios.put(`http://localhost:3200/animales/${id}`, body).then(() => console.log("Posteado"))
     }else{
       await axios.post('http://localhost:3200/animales', body).then(() => console.log("Posteado"))
-    }
-    
+    } 
   }
-  // const editApi = async (id, body) => {
-  //   await axios.put(`http://localhost:3200/animales/${id}`, body).then(() => console.log("Posteado"))
-  // }
+
   const retreiveData = (data) =>{
     setShow(true)
     setData2(data)
@@ -62,7 +61,7 @@ export default function Inventory() {
       {data.length > 0 && <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
           {show && <Modal status={estado_animal} post={postApi} changeModalState={() => handleModalChange()} headers={headers} data={data2} />}
-          <CardTable data={data} headers={headers} retreiveFunc={retreiveData} />
+          <CardTable data={data} headers={headers} retreiveFunc={retreiveData} changeModalState={() => handleDelete()} />
         </div>
       </div>}
     </>

@@ -50,9 +50,11 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  const deleteQuery = "delete from animal where id = @id";
+  const deleteQuery = `delete from animal where id_animal = ${req.params.id}`;
   const request = new Request(deleteQuery, (err) => {
     if (err) res.status(500).send('There was an error trying to delete a animal');
+
+    return res.send("done")
   });
 
   request.addParameter('id', TYPES.Int, req.params.id);
@@ -68,7 +70,7 @@ router.put('/:id', (req, res) => {
   if (!nombre && !nacimiento && !id_genotipo && !id_estado_animal)
     return res.status(304).end();
   
-  let queryParams = [nombre ? 'nombre = @nombre' : '', nacimiento ? 'nacimiento = @nacimiento,' : '',
+  let queryParams = [nombre ? 'nombre = @nombre' : '', nacimiento ? 'nacimiento = @nacimiento' : '',
     id_genotipo ? 'id_genotipo = @id_genotipo' : '', id_estado_animal ? 'id_estado_animal = @id_estado_animal' : '']
   
   queryParams = queryParams.reduce((ant, actual) => {
@@ -76,17 +78,14 @@ router.put('/:id', (req, res) => {
     return ant;
   }, []);
 
-  const putQuery = `update animal set ${queryParams.toString()} where id_animal =@id`;
+  const putQuery = `update animal set ${queryParams.toString()} where id_animal = ${req.params.id}`;
 
   const request = new Request(putQuery, (err) => {
     if (err) res.status(500).send('There was an error trying to post a new animal');
-
-    return res.send("done")
   });
   
-  request.addParameter('id', TYPES.Int, req.params.id);
   request.addParameter('nombre', TYPES.VarChar, nombre);
-  request.addParameter('nacimeinto', TYPES.Date, nacimiento);
+  request.addParameter('nacimiento', TYPES.Date, nacimiento);
   request.addParameter('id_genotipo', TYPES.Int, id_genotipo);
   request.addParameter('id_estado_animal', TYPES.Int, id_estado_animal);
   
