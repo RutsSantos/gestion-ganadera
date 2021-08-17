@@ -21,6 +21,7 @@ export default function Inventory() {
       setEstado(response2.data)
     }
     fetchMyAPI()
+    setDelete(false)
   }, [show, del])
 
   data.map(item => {
@@ -35,7 +36,7 @@ export default function Inventory() {
   const handleDelete = (res) => setDelete(res);
 
   const postApi = async (id, body) => {
-    if(data2){
+    if(data2.length>0){
       await axios.put(`http://localhost:3200/animales/${id}`, body).then(() => console.log("Posteado"))
     }else{
       await axios.post('http://localhost:3200/animales', body).then(() => console.log("Posteado"))
