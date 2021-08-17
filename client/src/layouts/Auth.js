@@ -19,7 +19,9 @@ export default function Auth() {
             }}
           ></div>
           <Switch>
-            <Route path="/auth/login" exact component={Login} />
+            <Route path="/auth/login" exact >
+              <Login />
+            </Route>
             <Route path="/auth/register" exact component={Register} />
             <Redirect from="/" to="/auth/login" />
           </Switch>
