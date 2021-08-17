@@ -105,10 +105,10 @@ export default function CardBarChart() {
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">
               <h6 className="uppercase text-blueGray-400 mb-1 text-xs font-semibold">
-                Performance
+                Rendimiento
               </h6>
               <h2 className="text-blueGray-700 text-xl font-semibold">
-                Total orders
+                Total de ordenes
               </h2>
             </div>
           </div>
