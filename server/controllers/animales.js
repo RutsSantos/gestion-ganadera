@@ -27,7 +27,6 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const { nombre = null, nacimiento = null, id_genotipo = null, id_estado_animal = null } = req.body;
-
   if (!nombre || !nacimiento || !id_genotipo || !id_estado_animal)
     return res.status(400).send('the data is not completed as expected');
 
@@ -38,9 +37,9 @@ router.post('/', (req, res) => {
       console.error(err);
       res.status(500).send('There was an error trying to post a new animal');
     }
-  });
 
-  request.on('done', () => res.send('done'));
+    return res.send("done")
+  });
     
   request.addParameter('nombre', TYPES.VarChar, nombre);
   request.addParameter('nacimiento', TYPES.Date, nacimiento);
@@ -77,10 +76,12 @@ router.put('/:id', (req, res) => {
     return ant;
   }, []);
 
-  const putQuery = `update animal set ${queryParams.toString()} where id =@id`;
+  const putQuery = `update animal set ${queryParams.toString()} where id_animal =@id`;
 
   const request = new Request(putQuery, (err) => {
     if (err) res.status(500).send('There was an error trying to post a new animal');
+
+    return res.send("done")
   });
   
   request.addParameter('id', TYPES.Int, req.params.id);

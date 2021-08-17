@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import TableDropdown from "components/Dropdowns/TableDropdown.js";
 
-export default function CardTable({ color, title, data = [], headers=[] }) {
+export default function CardTable({ color, title, data = [], headers=[], retreiveFunc }) {
   return (
     <>
       <div
@@ -58,7 +58,7 @@ export default function CardTable({ color, title, data = [], headers=[] }) {
                   </td>)
                 }
                 return <tr key={key}>{indents}<td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                  <TableDropdown />
+                  <TableDropdown data={item} func={retreiveFunc} />
                 </td></tr>
               })}
             </tbody>

@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
+import { Dropdown } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css'
 
-export default function Modal({ changeModalState, headers }) {
+export default function Modal({ status=[], post, changeModalState, headers, data = [] }) {
+  const {id_animal = "",nombre = "", nacimiento = "", id_genotipo = "", id_estado_animal = ""} = data;
+  const [name, setName] = useState(nombre);
+  const [birth, setBirth] = useState(nacimiento);
+  const [genotipo, setGenotipo] = useState(id_genotipo);
+  const [estado, setEstado] = useState(id_estado_animal);
+  let body = {
+    "nombre": name,
+    "nacimiento": birth,
+    "id_genotipo": genotipo,
+    "id_estado_animal": estado
+  };
+  const stateOptions = [];
+  status.map(item => stateOptions.push({ key: item.id_estado_animal, value: item.descripcion, text: item.descripcion }))
   return (
     <>
       <div
         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-        onClick={() => changeModalState(false)}
       >
         <div className="relative w-auto my-6 mx-auto max-w-3xl" style={{ marginLeft: "10%" }}>
           {/*content*/}
@@ -37,27 +51,13 @@ export default function Modal({ changeModalState, headers }) {
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="grid-password"
                       >
-                        {headers[0]}
-                      </label>
-                      <input
-                        type="text"
-                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        defaultValue="lucky.jesse"
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-6/12 px-4">
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlFor="grid-password"
-                      >
                         {headers[1]}
                       </label>
                       <input
                         type="text"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        defaultValue="lucky.jesse"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -72,7 +72,8 @@ export default function Modal({ changeModalState, headers }) {
                       <input
                         type="text"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        defaultValue="lucky.jesse"
+                        value={birth}
+                        onChange={(e) => setBirth(e.target.value)}
                       />
                     </div>
                   </div>
@@ -87,7 +88,8 @@ export default function Modal({ changeModalState, headers }) {
                       <input
                         type="text"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        defaultValue="lucky.jesse"
+                        value={genotipo}
+                        onChange={(e) => setGenotipo(e.target.value)}
                       />
                     </div>
                   </div>
@@ -99,11 +101,16 @@ export default function Modal({ changeModalState, headers }) {
                       >
                         {headers[4]}
                       </label>
-                      <input
+                      {/* <input
                         type="text"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         defaultValue="lucky.jesse"
-                      />
+                      /> */}
+                      <Dropdown placeholder='Seleccionar' selection options={stateOptions} onChange={(e, data) => {
+                        const { value } = data;
+                        const { key } = data.options.find(o => o.value === value);
+                        setEstado(key)
+                      }} />
                     </div>
                   </div>
                 </div>
@@ -121,7 +128,15 @@ export default function Modal({ changeModalState, headers }) {
               <button
                 className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => changeModalState(false)}
+                onClick={async () => {
+                  let date = new Date(birth);
+                  date = date.toISOString();
+                  body["nacimiento"] = date;
+                  body["id_genotipo"] = parseInt(genotipo);
+                  console.log(body)
+                  await post(id_animal, body)
+                  changeModalState(false)
+                }}
               >
                 Guardar
               </button>
