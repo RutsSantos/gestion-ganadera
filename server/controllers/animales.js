@@ -50,16 +50,17 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
+
   const deleteQuery = `delete from animal where id_animal = ${req.params.id}`;
   const request = new Request(deleteQuery, (err) => {
     if (err) res.status(500).send('There was an error trying to delete a animal');
 
     return res.send("done")
+
   });
 
-  request.addParameter('id', TYPES.Int, req.params.id);
-
-  request.on('done', () => res.send('The animal was deleted succesfully'));
+  const animalId = Number.parseInt(req.params.id);
+  request.addParameter('id', TYPES.Int, animalId);
 
   connection.execSql(request);
 });
@@ -78,19 +79,21 @@ router.put('/:id', (req, res) => {
     return ant;
   }, []);
 
+
   const putQuery = `update animal set ${queryParams.toString()} where id_animal = ${req.params.id}`;
 
+
   const request = new Request(putQuery, (err) => {
+    console.log(err)
     if (err) res.status(500).send('There was an error trying to post a new animal');
+    res.send('The animal was updated succesfully');
   });
-  
+
   request.addParameter('nombre', TYPES.VarChar, nombre);
   request.addParameter('nacimiento', TYPES.Date, nacimiento);
   request.addParameter('id_genotipo', TYPES.Int, id_genotipo);
   request.addParameter('id_estado_animal', TYPES.Int, id_estado_animal);
   
-  request.on('done', () => res.send('The animal was updated succesfully'));
-
   connection.execSql(request);
 });
 
