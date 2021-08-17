@@ -69,9 +69,13 @@ router.put('/:id', (req, res) => {
   if (!nombre && !nacimiento && !id_genotipo && !id_estado_animal)
     return res.status(304).end();
   
-  const queryParams = []
-  nose.push(nombre ? 'nombre = @nombre' , !nacimiento ?? 'nacimiento = @nacimiento,',
-    !id_genotipo ?? 'id_genotipo = @id_genotipo', !id_estado_animal ?? 'id_estado_animal = @id_estado_animal');
+  let queryParams = [nombre ? 'nombre = @nombre' : '', nacimiento ? 'nacimiento = @nacimiento,' : '',
+    id_genotipo ? 'id_genotipo = @id_genotipo' : '', id_estado_animal ? 'id_estado_animal = @id_estado_animal' : '']
+  
+  queryParams = queryParams.reduce((ant, actual) => {
+    if (actual) ant.push(actual);
+    return ant;
+  }, []);
 
   const putQuery = `update animal set ${queryParams.toString()} where id =@id`;
 
