@@ -48,19 +48,18 @@ router.post("/", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  //   const deleteQuery = `delete from animal where id_animal = ${req.params.id}`;
-  //   const request = new Request(deleteQuery, (err) => {
-  //     if (err) res.status(500).send('There was an error trying to delete a animal');
-
-  //     return res.send("done")
-
-  //   });
-
-  //   const animalId = Number.parseInt(req.params.id);
-  //   request.addParameter('id', TYPES.Int, animalId);
-
-  //   connection.execSql(request);
-  return res.status(200).send("DELETE /id SUCESS");
+    const deleteQuery = `delete from empresa where id_empresa = ${req.params.id}`;
+    const request = new Request(deleteQuery, (err) => {
+      if (err) res.status(500).send('There was an error trying to delete a employee');
+  
+      return res.send("done")
+  
+    });
+  
+    const employeeId = Number.parseInt(req.params.id);
+    request.addParameter('id_empresa', TYPES.Int, employeeId);
+  
+    connection.execSql(request);
 });
 
 router.put("/:id", (req, res) => {
