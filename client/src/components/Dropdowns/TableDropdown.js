@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { createPopper } from "@popperjs/core";
 import axios from 'axios';
 import { useLocation } from 'react-router-dom'
 
-const NotificationDropdown = ({data, itemId, func, changeModalState}) => {
+const NotificationDropdown = ({ data, func, changeModalState }) => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -17,19 +17,29 @@ const NotificationDropdown = ({data, itemId, func, changeModalState}) => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+
   const location = useLocation();
   let route, id;
-  if (location.pathname === "/business/employees") {
-    route =  "empleados";
-    id = data.id_empleado;
-  } else if (location.pathname === "/admin/users") {
-    route = "auth"
-    id = data.id_usuario
-  } else {
-    route = "animales";
-    id = data.id_animal
+
+  switch (location.pathname) {
+    case "/business/employees":
+      route = "empleados";
+      id = data.id_empleado;
+      break;
+    case "/business/supliers":
+      route = "suplidores";
+      id = data.id_suplidor;
+      break;
+    case "/admin/users":
+      route = "auth"
+      id = data.id_usuario
+    default:
+      route = "animales";
+      id = data.id_animal;
   }
-  const deleteEl = async () => await axios.delete(`http://localhost:3200/${route}/${id}`)
+
+  const deleteEl = async () => await axios.delete(`http://localhost:3200/${route}/${id}`);
+
   return (
     <>
       <a
@@ -66,8 +76,8 @@ const NotificationDropdown = ({data, itemId, func, changeModalState}) => {
           }
           onClick={async () => {
             await deleteEl();
-            changeModalState()
-        }}
+            changeModalState(true);
+          }}
         >
           Eliminar
         </a>
