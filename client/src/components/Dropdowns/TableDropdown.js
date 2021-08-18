@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { createPopper } from "@popperjs/core";
+import axios from 'axios';
+import { useLocation } from 'react-router-dom'
 
-const NotificationDropdown = () => {
+const NotificationDropdown = ({data, func, changeModalState}) => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -15,6 +17,10 @@ const NotificationDropdown = () => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+  const location = useLocation();
+  const route = location.pathname === "/business/employees" ? "empleados" : "animales";
+  const id = location.pathname === "/business/employees" ? data.id_empleado : data.id_animal;
+  const deleteEl = async () => await axios.delete(`http://localhost:3200/${route}/${id}`)
   return (
     <>
       <a
@@ -40,27 +46,21 @@ const NotificationDropdown = () => {
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={() => func(data)}
         >
-          Action
+          Editar
         </a>
         <a
           href="#pablo"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={async () => {
+            await deleteEl();
+            changeModalState(true);
+        }}
         >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
+          Eliminar
         </a>
       </div>
     </>

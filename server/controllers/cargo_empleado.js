@@ -4,12 +4,12 @@ const { connection } = require('../startup/database');
 const router = Router();
 
 router.get('/', (req, res) => {
-  const getQuery = "SELECT * FROM animal";
+  const getQuery = "SELECT * FROM cargo";
   const request = new Request(getQuery, (err, rowCount, rows) => {
-    if (err) return res.status(500).send('There was an error trying to get the animals');
+    if (err) return res.status(500).send('There was an error trying to get the cargo');
     if (rowCount === 0) return [];
 
-    let animals = rows.reduce((acc, row) => { 
+    let cuentas = rows.reduce((acc, row) => { 
       const animalObj = {};
       for (column of row) {
         animalObj[column.metadata.colName] = column.value;
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
       return acc;
     }, []);
 
-    res.send(animals);
+    res.send(cuentas);
   });
 
   connection.execSql(request);
