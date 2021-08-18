@@ -98,7 +98,6 @@ router.put('/', async (req, res) => {
   // const getQuery = `SELECT * FROM usuario`;
 
   const request = new Request(getQuery, (err, rowCount, rows) => {
-    console.log(err, third_party_id)
     if (err) return res.status(500).send('There was an error trying to signup');
 
     return res.status(200).send(rows)
@@ -130,8 +129,6 @@ router.put('/:id', async (req, res) => {
   const getQuery = `UPDATE usuario SET nombre_usuario=@username, contrasena=@password, id_tipo_usuario=@user_type, id_tercero=@third_party WHERE id_usuario=@id`;
 
   const request = new Request(getQuery, (err, rowCount, rows) => {
-
-    // console.log(err)
     if (err) return res.status(500).send('There was an error trying to signup');
 
     return res.status(200).send(rows)
