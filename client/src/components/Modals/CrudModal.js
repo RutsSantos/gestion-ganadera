@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { Dropdown } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
 export default function CrudModal({ data = {}, headers, onSave, onCancel }) {
   const [state, setState] = useState(data);
-  const mode = Object.keys(data) > 0 ? 'edit' : 'add';
+  const [mode, setMode] = useState("add");
+
+  useEffect(() => {
+    setMode(Object.keys(state).length > 0 ? "edit" : "add");
+  }, [state, setMode]);
 
   return (
     <>
@@ -17,7 +21,9 @@ export default function CrudModal({ data = {}, headers, onSave, onCancel }) {
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-10/12 bg-white outline-none focus:outline-none">
             {/*header*/}
             <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-              <h3 className="text-3xl font-semibold">{mode === 'add' ? 'Añadir' : 'Editar'}</h3>
+              <h3 className="text-3xl font-semibold">
+                {mode === "add" ? "Añadir" : "Editar"}
+              </h3>
               <button
                 className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                 // onClick={() => changeModalState(false)}
@@ -63,7 +69,7 @@ export default function CrudModal({ data = {}, headers, onSave, onCancel }) {
                     );
                   })}
                   {/* <div className="w-full lg:w-6/12 px-4"> */}
-                    {/* <div className="relative w-full mb-3">
+                  {/* <div className="relative w-full mb-3">
                       <label
                         className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                         htmlFor="grid-password"
@@ -89,8 +95,8 @@ export default function CrudModal({ data = {}, headers, onSave, onCancel }) {
                 className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
                 onClick={() => {
-                    setState({});
-                    onCancel()
+                  setState({});
+                  onCancel();
                 }}
               >
                 Cancelar

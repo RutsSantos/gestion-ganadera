@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
-import { TEMP_SUPLIERS, mockSuplierData } from "./utils";
+import { TEMP_SUPLIERS } from "./utils";
 
 // components
 
@@ -12,22 +13,47 @@ export default function Supliers() {
   const [tempId, setTempId] = useState(TEMP_SUPLIERS.length);
   const [data, setData] = useState(TEMP_SUPLIERS);
   const [tempData, setTempData] = useState({});
+  const [del, setDel] = useState(false);
+
+
+  const fetchData =  async () => {
+    // axios.get('http://localhost:3200/suplidores')
+    // .then((res) => { console.log(res.data); setData(res.data) })
+  }
 
   // Handlers
   const handleCancel = () => {
     setShow(false);
+    setTempData({});
   };
   const handleSave = (newData) => {
+    if(newData.hasOwnProperty('id_suplidor')) {
+      // axios.put(`http://localhost:3200/animales/${newData.id_suplidor}`, newData).then(() => console.log("Posteado"))
+    } else {
+      // axios.post('http://localhost:3200/animales', { ...newData, id_suplidor: tempId }).then(() => console.log("Posteado"))
+      // Push to server and refresh
+      fetchData();
+    }
+
+    //uncomment when server is ready
     setData((prev) => [...prev, { ...newData, id_suplidor: tempId }]);
     setTempId((prev) => prev + 1);
-    // Push to server
-    //
     setShow(false);
+    setTempData({});
   };
+
   const handleDelete = () => {
-    // TODO
+    setDel(true);
+  }
+
+  const retreiveData = (editData) => {
+    setTempData(editData);
+    setShow(true);
   };
-  const retreiveData = () => {};
+
+  useEffect(() => {
+    fetchData();
+  }, [del])
 
   const headers = Object.keys(data[0]);
   const modalHeaders = headers.filter(header => header !== 'id_suplidor');
@@ -47,14 +73,14 @@ export default function Supliers() {
       {data.length > 0 && (
         <div className="flex flex-wrap mt-4">
           <div className="w-full mb-12 px-4">
-            {show && (
+            {show ? (
               <CrudModal
                 data={tempData}
                 headers={modalHeaders}
                 onSave={handleSave}
                 onCancel={handleCancel}
               />
-            )}
+            ) : null}
             <CardTable
               data={data}
               headers={headers}
