@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
 import { createPopper } from "@popperjs/core";
-import axios from "axios";
+import axios from 'axios';
+import { useLocation } from 'react-router-dom'
 
 const NotificationDropdown = ({ data, func, changeModalState }) => {
   // dropdown props
@@ -34,8 +34,7 @@ const NotificationDropdown = ({ data, func, changeModalState }) => {
       id = data.id_animal;
   }
 
-  const deleteEl = async () =>
-    await axios.delete(`http://localhost:3200/${route}/${id}`);
+  const deleteEl = async () => await axios.delete(`http://localhost:3200/${route}/${id}`);
   return (
     <>
       <a
