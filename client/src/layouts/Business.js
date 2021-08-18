@@ -18,7 +18,7 @@ export default function Business() {
             <div className="relative md:ml-64 bg-blueGray-100">
                 {/* Header */}
                 <div className="bg-lightBlue-600 md:pt-32 pb-16 pt-12"></div>
-                <div className="px-4 md:px-10 mx-auto w-full -m-24" style={{minHeight: "88vh"}}>
+                <div className="px-4 md:px-10 mx-auto w-full -m-24" style={{minHeight: "96vh"}}>
                     <Switch>
                         <Route path="/business/inventory" exact component={Inventory} />
                         <Route path="/business/sales" exact component={Sales} />

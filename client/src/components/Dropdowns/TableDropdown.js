@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import { createPopper } from "@popperjs/core";
+import axios from 'axios';
+import { useLocation } from 'react-router-dom'
 
 const NotificationDropdown = ({data, itemId, func, changeModalState}) => {
   // dropdown props
@@ -15,7 +17,19 @@ const NotificationDropdown = ({data, itemId, func, changeModalState}) => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
-
+  const location = useLocation();
+  let route, id;
+  if (location.pathname === "/business/employees") {
+    route =  "empleados";
+    id = data.id_empleado;
+  } else if (location.pathname === "/admin/users") {
+    route = "auth"
+    id = data.id_usuario
+  } else {
+    route = "animales";
+    id = data.id_animal
+  }
+  const deleteEl = async () => await axios.delete(`http://localhost:3200/${route}/${id}`)
   return (
     <>
       <a
@@ -51,7 +65,8 @@ const NotificationDropdown = ({data, itemId, func, changeModalState}) => {
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
           onClick={async () => {
-            await changeModalState(data['id_usuario'] || data['id_animal']);
+            await deleteEl();
+            changeModalState()
         }}
         >
           Eliminar
