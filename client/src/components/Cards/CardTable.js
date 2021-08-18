@@ -58,7 +58,7 @@ export default function CardTable({ color, title, data = [], headers=[], retreiv
                   </td>)
                 }
                 return <tr key={key}>{indents}<td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                  <TableDropdown data={item} func={retreiveFunc} changeModalState={()=>changeModalState()} />
+                  <TableDropdown data={item} func={retreiveFunc} changeModalState={changeModalState} />
                 </td></tr>
               })}
             </tbody>

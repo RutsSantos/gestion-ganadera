@@ -34,8 +34,10 @@ export default function Register() {
   }
 
   const handleModalChange = (res) => setShow(res);
-  const handleDelete = (res) => setDelete(res);
-
+  const handleDelete = async (id) => {
+    await axios.delete(`http://localhost:3200/auth/${id}`)
+    setDelete(true);
+  }
   const retreiveData = (data) => {
     setShow(true)
     setEditing(true)
@@ -45,7 +47,7 @@ export default function Register() {
   return (<>
     {users.length > 0 && <div className="flex flex-wrap mt-4">
       <div className="w-full mb-12 px-4"></div>
-      <CardTable title="Usuarios" data={users} retreiveFunc={retreiveData} changeModalState={() => handleDelete()} headers={['id', 'Nombre de Usuario']} />
+      <CardTable title="Usuarios" data={users} retreiveFunc={retreiveData} changeModalState={handleDelete} headers={['id', 'Nombre de Usuario']} />
       {show && <UserModal status={usersTypes} post={postApi} changeModalState={() => handleModalChange()} headers={['Nombre Usuario', 'Contraseña', 'Confirmar contraseña', 'Tipo de Usurio']} data={currentUser} />}
     </div>}
     <div className="text-center flex justify-between">

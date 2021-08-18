@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import { createPopper } from "@popperjs/core";
-import axios from 'axios';
 
-const NotificationDropdown = ({data, func, changeModalState}) => {
+const NotificationDropdown = ({data, itemId, func, changeModalState}) => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -17,7 +16,6 @@ const NotificationDropdown = ({data, func, changeModalState}) => {
     setDropdownPopoverShow(false);
   };
 
-  const deleteEl = async () => await axios.delete(`http://localhost:3200/animales/${data.id_animal}`)
   return (
     <>
       <a
@@ -53,8 +51,7 @@ const NotificationDropdown = ({data, func, changeModalState}) => {
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
           onClick={async () => {
-            await deleteEl();
-            changeModalState(true);
+            await changeModalState(data['id_usuario'] || data['id_animal']);
         }}
         >
           Eliminar

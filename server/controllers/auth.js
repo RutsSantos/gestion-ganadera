@@ -146,4 +146,19 @@ router.put('/:id', async (req, res) => {
   
 })
 
+router.delete('/:id', async (req, res) => {
+
+  const getQuery = `DELETE FROM usuario WHERE id_usuario=@id`;
+
+  const request = new Request(getQuery, (err, rowCount, rows) => {
+    if (err) return res.status(500).send('There was an error trying to delete the user');
+
+    return res.status(200).send(rows)
+  });
+
+  request.addParameter('id', TYPES.Int, parseInt(req.params.id));
+
+  connection.execSql(request);
+})
+
 module.exports = router;
