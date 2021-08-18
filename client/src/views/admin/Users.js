@@ -19,7 +19,7 @@ export default function Register() {
 
       await axios.get('http://localhost:3200/auth/types')
         .then((res) => setUsersTypes(res.data))
-      
+
       await axios.get('http://localhost:3200/terceros')
         .then((res) => setTerceros(res.data))
     }
@@ -46,21 +46,22 @@ export default function Register() {
     setCurrentUser(data)
   }
 
-  return (<>
-    {users.length > 0 && <div className="flex flex-wrap mt-4">
-      <div className="w-full mb-12 px-4"></div>
-      <CardTable title="Usuarios" data={users} retreiveFunc={retreiveData} changeModalState={handleDelete} headers={['id', 'Nombre de Usuario', 'ID Tipo de Usuario', 'ID Terceros']} />
-      {show && <UserModal status={usersTypes} post={postApi} changeModalState={() => handleModalChange()} headers={['Nombre Usuario', 'Contraseña', 'Confirmar contraseña', 'Tipo de Usurio']} third_party_ids={terceros} data={currentUser} />}
-    </div>}
-    <div className="text-center flex justify-between">
-      <h6 className="text-white text-xl font-bold">Usuarios</h6>
-      <button
-        onClick={() => handleModalChange(true)}
-        className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-        type="button"
-      >
-        Añadir
-      </button>
-    </div>
-  </>)
+  return (
+    <>
+      <div className="text-center flex justify-between">
+        <h6 className="text-white text-xl font-bold">Usuarios</h6>
+        <button
+          onClick={() => handleModalChange(true)}
+          className="bg-lightBlue-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+          type="button"
+        >
+          Añadir
+        </button>
+      </div>
+      {users.length > 0 && <div className="flex flex-wrap mt-4">
+        <div className="w-full mb-12 px-4"></div>
+        <CardTable title="Usuarios" data={users} retreiveFunc={retreiveData} changeModalState={handleDelete} headers={['id', 'Nombre de Usuario', 'ID Tipo de Usuario', 'ID Terceros']} />
+        {show && <UserModal status={usersTypes} post={postApi} changeModalState={() => handleModalChange()} headers={['Nombre Usuario', 'Contraseña', 'Confirmar contraseña', 'Tipo de Usurio']} third_party_ids={terceros} data={currentUser} />}
+      </div>}
+    </>)
 }
