@@ -19,7 +19,7 @@ export default function HeaderStats() {
                 <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                   <CardStats
                     statSubtitle="ANIMALES"
-                    statTitle="350,897"
+                    statTitle="35"
                     statArrow="up"
                     statPercent="3.48"
                     statPercentColor="text-emerald-500"
@@ -31,7 +31,7 @@ export default function HeaderStats() {
                 <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                   <CardStats
                     statSubtitle="GESTANTES"
-                    statTitle="2,356"
+                    statTitle="7"
                     statArrow="down"
                     statPercent="3.48"
                     statPercentColor="text-red-500"

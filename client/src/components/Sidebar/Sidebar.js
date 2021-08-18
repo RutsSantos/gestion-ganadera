@@ -106,7 +106,7 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              <li className="items-center">
+              {/* <li className="items-center">
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -126,7 +126,7 @@ export default function Sidebar() {
                   ></i>{" "}
                   Ajustes
                 </Link>
-              </li>
+              </li> */}
 
               <li className="items-center">
                 <Link
@@ -188,7 +188,7 @@ export default function Sidebar() {
                   to="/business/sales"
                 >
                   <i className="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  Ventas
+                  Producción
                 </Link>
               </li>
 

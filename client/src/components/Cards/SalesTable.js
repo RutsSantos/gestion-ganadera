@@ -73,7 +73,7 @@ export default function CardTable({ color, data = {}, dropdown }) {
                   (color === 'light' ? 'text-blueGray-700' : 'text-white')
                 }
               >
-                Card Tables
+                Detalle
               </h3>
             </div>
           </div>
