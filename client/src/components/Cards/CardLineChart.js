@@ -115,7 +115,7 @@ export default function CardLineChart() {
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Resumen
               </h6>
-              <h2 className="text-white text-xl font-semibold">Ventas</h2>
+              <h2 className="text-white text-xl font-semibold">Producción</h2>
             </div>
           </div>
         </div>

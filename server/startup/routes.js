@@ -1,4 +1,5 @@
 const animales = require('../controllers/animales');
+const sales = require('../controllers/sales');
 const auth = require('../controllers/auth');
 const estado_animal = require('../controllers/estado_animal');
 const empleados = require('../controllers/empleados');
@@ -8,6 +9,7 @@ const estado_empleado = require('../controllers/estado_empleado');
 const cargo_empleado = require('../controllers/cargo_empleado');
 
 module.exports = function(app){
+  app.use('/sales', sales);
   app.use('/animales', animales);
   app.use('/auth', auth);
   app.use('/estado_animal', estado_animal);
