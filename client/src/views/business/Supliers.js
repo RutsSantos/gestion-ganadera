@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
-import { TEMP_SUPLIERS } from "./utils";
-
 // components
 
 import CardTable from "components/Cards/CardTable.js";
@@ -10,15 +8,14 @@ import CrudModal from "components/Modals/CrudModal.js";
 
 export default function Supliers() {
   const [show, setShow] = useState(false);
-  const [tempId, setTempId] = useState(TEMP_SUPLIERS.length);
-  const [data, setData] = useState(TEMP_SUPLIERS);
+  const [data, setData] = useState([]);
   const [tempData, setTempData] = useState({});
   const [del, setDel] = useState(false);
 
 
   const fetchData =  async () => {
-    // axios.get('http://localhost:3200/suplidores')
-    // .then((res) => { console.log(res.data); setData(res.data) })
+    axios.get('http://localhost:3200/suplidores')
+    .then((res) => { console.log(res.data); setData(res.data) })
   }
 
   // Handlers
@@ -28,16 +25,13 @@ export default function Supliers() {
   };
   const handleSave = (newData) => {
     if(newData.hasOwnProperty('id_suplidor')) {
-      // axios.put(`http://localhost:3200/animales/${newData.id_suplidor}`, newData).then(() => console.log("Posteado"))
+      // axios.put(`http://localhost:3200/suplidores/${newData.id_suplidor}`, newData).then(() => console.log("Posteado"))
     } else {
-      // axios.post('http://localhost:3200/animales', { ...newData, id_suplidor: tempId }).then(() => console.log("Posteado"))
+      axios.post('http://localhost:3200/suplidores', newData).then(() => console.log("Posteado"))
       // Push to server and refresh
       fetchData();
     }
 
-    //uncomment when server is ready
-    setData((prev) => [...prev, { ...newData, id_suplidor: tempId }]);
-    setTempId((prev) => prev + 1);
     setShow(false);
     setTempData({});
   };
@@ -55,8 +49,20 @@ export default function Supliers() {
     fetchData();
   }, [del])
 
-  const headers = Object.keys(data[0]);
+  const headers = ["id_suplidor", "nombre", "rnc"];
+
+  const d = data.map(item => {
+    const newItem = {
+      id_suplidor: item.id_empresa,
+      nombre: item.nombre,
+      rnc: item.rnc
+    }
+    return newItem;
+  })
+
   const modalHeaders = headers.filter(header => header !== 'id_suplidor');
+
+  console.log(d);
 
   return (
     <>
@@ -82,7 +88,7 @@ export default function Supliers() {
               />
             ) : null}
             <CardTable
-              data={data}
+              data={d}
               headers={headers}
               retreiveFunc={retreiveData}
               changeModalState={() => handleDelete()}
