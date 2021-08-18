@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import { Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
-export default function Modal({ status=[], post, changeModalState, headers, data = [] }) {
-  const { id_usuario = "", nombre_usuario = "", tipo_usuario = "" } = data;
+export default function Modal({ status=[], post, third_party_ids, changeModalState, headers, data = [] }) {
+  const { id_usuario = "", nombre_usuario = "", tipo_usuario = "", third_party_id = "" } = data;
   const [name, setName] = useState(nombre_usuario);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [tipoUsuario, setTipoUsuario] = useState(tipo_usuario);
+  const [thirdPartyId, setThirdPartyId] = useState(third_party_id);
   let body = {
     "username": name,
     "password": password,
-    "user_type": tipoUsuario
+    "user_type": tipoUsuario,
+    "third_party_id": thirdPartyId
   };
   const stateOptions = [];
   status.map(item => stateOptions.push({ key: item.id_tipo_usuario, value: item.descripcion, text: item.descripcion }))
+  const third_party_option = third_party_ids.map(item => ({ key: item.id_tercero, value: item.nombre, text: item.nombre }))
   return (
     <>
       <div
@@ -107,6 +110,22 @@ export default function Modal({ status=[], post, changeModalState, headers, data
                       }} />
                     </div>
                   </div>
+
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        {"ID Tercero"}
+                      </label>
+                      <Dropdown placeholder='Seleccionar' selection options={third_party_option} onChange={(e, data) => {
+                        const { value } = data;
+                        const { key } = data.options.find(o => o.value === value);
+                        setThirdPartyId(key)
+                      }} />
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -125,6 +144,7 @@ export default function Modal({ status=[], post, changeModalState, headers, data
                 onClick={async () => {
                   body["tipo_usuario"] = parseInt(tipoUsuario);
                   if (password === confirmPassword) {
+                    console.log(body)
                     await post(id_usuario, body)
                     changeModalState(false)
                   }

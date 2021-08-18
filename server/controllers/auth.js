@@ -5,7 +5,7 @@ const { connection } = require('../startup/database');
 const router = Router();
 
 router.get('/', (req, res) => {
-  const getQuery = `SELECT id_usuario, nombre_usuario, id_tipo_usuario FROM usuario`;
+  const getQuery = `SELECT id_usuario, nombre_usuario, id_tipo_usuario, id_tercero FROM usuario`;
 
   const request = new Request(getQuery, async (err, rowCount, rows) => {
     if (err) return res.status(500).send('There was an error trying to authenticate the user');
@@ -80,7 +80,7 @@ router.post('/login', (req, res) => {
 })
 
 router.put('/', async (req, res) => {
-  const { username, password, user_type } = req.body
+  const { username, password, user_type, third_party_id } = req.body
 
   if (!req.body || !username || !password) {
     return res.status(400).send({
@@ -94,10 +94,11 @@ router.put('/', async (req, res) => {
 
   const passwordHash = password // await bcrypt.hash(password, salt);
 
-  const getQuery = `INSERT INTO usuario (nombre_usuario, contrasena, id_tipo_usuario) VALUES (@username, @password, @user_type)`;
+  const getQuery = `INSERT INTO usuario (nombre_usuario, contrasena, id_tipo_usuario, id_tercero) VALUES (@username, @password, @user_type, @third_party)`;
   // const getQuery = `SELECT * FROM usuario`;
 
   const request = new Request(getQuery, (err, rowCount, rows) => {
+    console.log(err, third_party_id)
     if (err) return res.status(500).send('There was an error trying to signup');
 
     return res.status(200).send(rows)
@@ -106,14 +107,13 @@ router.put('/', async (req, res) => {
   request.addParameter('username', TYPES.Text, username);
   request.addParameter('password', TYPES.Text, passwordHash);
   request.addParameter('user_type', TYPES.Int, user_type);
+  request.addParameter('third_party', TYPES.Int, third_party_id);
 
   connection.execSql(request);
 })
 
 router.put('/:id', async (req, res) => {
-  const { username, password, user_type } = req.body
-
-  console.log(req)
+  const { username, password, user_type, third_party_id } = req.body
 
   if (!req.body || !username || !password) {
     return res.status(400).send({
@@ -127,11 +127,11 @@ router.put('/:id', async (req, res) => {
 
   const passwordHash = password // await bcrypt.hash(password, salt);
 
-  const getQuery = `UPDATE usuario SET nombre_usuario=@username, contrasena=@password, id_tipo_usuario=@user_type WHERE id_usuario=@id`;
+  const getQuery = `UPDATE usuario SET nombre_usuario=@username, contrasena=@password, id_tipo_usuario=@user_type, id_tercero=@third_party WHERE id_usuario=@id`;
 
   const request = new Request(getQuery, (err, rowCount, rows) => {
 
-    console.log(err)
+    // console.log(err)
     if (err) return res.status(500).send('There was an error trying to signup');
 
     return res.status(200).send(rows)
@@ -140,6 +140,7 @@ router.put('/:id', async (req, res) => {
   request.addParameter('username', TYPES.Text, username);
   request.addParameter('password', TYPES.Text, passwordHash);
   request.addParameter('user_type', TYPES.Int, user_type);
+  request.addParameter('third_party', TYPES.Int, third_party_id);
   request.addParameter('id', TYPES.Int, req.params.id);
 
   connection.execSql(request);

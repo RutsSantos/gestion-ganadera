@@ -6,6 +6,7 @@ import UserModal from "components/Modals/UserModal";
 export default function Register() {
   const [users, setUsers] = useState([])
   const [usersTypes, setUsersTypes] = useState([])
+  const [terceros, setTerceros] = useState([])
   const [show, setShow] = useState(false);
   const [del, setDelete] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -17,9 +18,10 @@ export default function Register() {
         .then((res) => setUsers(res.data))
 
       await axios.get('http://localhost:3200/auth/types')
-        .then((res) => {
-          setUsersTypes(res.data)
-        })
+        .then((res) => setUsersTypes(res.data))
+      
+      await axios.get('http://localhost:3200/terceros')
+        .then((res) => setTerceros(res.data))
     }
     fetchMyAPI()
     setDelete(false)
@@ -47,8 +49,8 @@ export default function Register() {
   return (<>
     {users.length > 0 && <div className="flex flex-wrap mt-4">
       <div className="w-full mb-12 px-4"></div>
-      <CardTable title="Usuarios" data={users} retreiveFunc={retreiveData} changeModalState={handleDelete} headers={['id', 'Nombre de Usuario']} />
-      {show && <UserModal status={usersTypes} post={postApi} changeModalState={() => handleModalChange()} headers={['Nombre Usuario', 'Contraseña', 'Confirmar contraseña', 'Tipo de Usurio']} data={currentUser} />}
+      <CardTable title="Usuarios" data={users} retreiveFunc={retreiveData} changeModalState={handleDelete} headers={['id', 'Nombre de Usuario', 'ID Tipo de Usuario', 'ID Terceros']} />
+      {show && <UserModal status={usersTypes} post={postApi} changeModalState={() => handleModalChange()} headers={['Nombre Usuario', 'Contraseña', 'Confirmar contraseña', 'Tipo de Usurio']} third_party_ids={terceros} data={currentUser} />}
     </div>}
     <div className="text-center flex justify-between">
       <h6 className="text-white text-xl font-bold">Usuarios</h6>
