@@ -33,7 +33,10 @@ export default function Inventory() {
   headers[4] = "Estado animal";
 
   const handleModalChange = (res) => setShow(res);
-  const handleDelete = (res) => setDelete(res);
+  const handleDelete = async (id) => {
+    await axios.delete(`http://localhost:3200/animales/${id}`)
+    setDelete(true);
+  }
 
   const postApi = async (id, body) => {
     if(data2.length>0){

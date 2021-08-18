@@ -1,19 +1,23 @@
-import React, {useState, useEffect} from "react";
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-export default function Login() {
+export default function Login({setAuth}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(()=>{
-    // axios.get('http://localhost:3200/animales').then((res)=>setData(res.data))
-  }, [])
+  const history = useHistory();
 
-  function loginUser() {
+  function loginUser(event) {
+    event.preventDefault()
     axios.post('http://localhost:3200/auth/login', {
       username,
       password
-    }).then(res => localStorage.setItem('gestion-ganadera@token', res.authenticated))
+    }).then(res => {
+      setAuth(res.data.authenticated)
+      localStorage.setItem('gestion-ganadera@token', JSON.stringify(res.data.authenticated))
+      history.push("/admin")
+    })
   }
 
   return (
@@ -39,7 +43,7 @@ export default function Login() {
                       Usuario
                     </label>
                     <input
-                      type="email"
+                      type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Usuario"
                       onChange={ ({target}) => setUsername(target.value) }
@@ -65,7 +69,6 @@ export default function Login() {
                     <button
                       className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                       onClick={loginUser}
-                      to="/admin"
                     >
                       Ingresar
                     </button>

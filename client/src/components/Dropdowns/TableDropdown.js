@@ -20,6 +20,7 @@ const NotificationDropdown = ({ data, func, changeModalState }) => {
 
   const location = useLocation();
   let route, id;
+
   switch (location.pathname) {
     case "/business/employees":
       route = "empleados";
@@ -29,12 +30,16 @@ const NotificationDropdown = ({ data, func, changeModalState }) => {
       route = "suplidores";
       id = data.id_suplidor;
       break;
+    case "/admin/users":
+      route = "auth"
+      id = data.id_usuario
     default:
       route = "animales";
       id = data.id_animal;
   }
 
   const deleteEl = async () => await axios.delete(`http://localhost:3200/${route}/${id}`);
+
   return (
     <>
       <a
