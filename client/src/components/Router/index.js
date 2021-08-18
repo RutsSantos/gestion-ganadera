@@ -14,15 +14,14 @@ import Landing from "views/Landing.js";
 import Profile from "views/Profile.js";
 
 function Router() {
-  const token = localStorage.getItem('gestion-ganadera@token');
-  localStorage.removeItem('gestion-ganadera@token')
-  console.log(token)
+  const [authenticated, setAuth] = useState(JSON.parse(localStorage.getItem('gestion-ganadera@token')));
+
   return (
     <BrowserRouter>
       <Switch>
-        {!token ? <> 
+        {!authenticated ? <> 
           <Route path="/auth">
-            <Auth/>
+            <Auth setAuth={setAuth}/>
           </Route> 
           <Redirect from="*" to="/auth/login" />
           </> : null}

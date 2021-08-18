@@ -11,7 +11,7 @@ import Sales from "views/business/Sales";
 import Supliers from "views/business/Supliers";
 import Employees from "views/business/Employees";
 
-export default function Auth() {
+export default function Business() {
     return (
         <>
             <Sidebar />

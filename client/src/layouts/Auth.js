@@ -4,9 +4,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // views
 
 import Login from "views/auth/Login.js";
-import Register from "views/auth/Register.js";
 
-export default function Auth() {
+export default function Auth({setAuth}) {
   return (
     <>
       <main>
@@ -20,9 +19,8 @@ export default function Auth() {
           ></div>
           <Switch>
             <Route path="/auth/login" exact >
-              <Login />
+              <Login setAuth={setAuth}/>
             </Route>
-            <Route path="/auth/register" exact component={Register} />
             <Redirect from="/" to="/auth/login" />
           </Switch>
         </section>
